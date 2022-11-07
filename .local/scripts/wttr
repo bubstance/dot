@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# displays precipication chance and today's high/low temps
+# set a cronjob to pull weather report from wttr.in
+# example: 0 1,9,17 * * * /usr/bin/curl -sf "wttr.in/<location>" > /home/<user>/.cache/weatherreport
+# will pull the weather 3 times per day: at 0100, 0900, and 1700
+
+report="${XDG_CACHE_HOME:-$HOME/.cache}/weather"
+
+show_weather() { printf "%s%s" "==$(date "+%m/%d")==" "$(sed '13q;d' "$report" |
+    grep -o "m\\([-+]\\)*[0-9]\\+" | sed 's/+//g' | sort -n -t 'm' -k 2n | sed -e 1b -e '$!d' |
+    tr '\n|m' ' ' | awk '{print "\n" "HIGH: " $2 "°", "\n" "LOW:  " $1 "°"}')"
+    printf "\n%s" "$(sed '16q;d' "$report" |
+    grep -wo "[0-9]*%" | sort -rn | sed "s/^/PCPN: /g;1q" | tr -d '\n')" ;}
+
+printf "%s\n" "$(show_weather)"
