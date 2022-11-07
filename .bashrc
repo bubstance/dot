@@ -101,7 +101,6 @@ alias dot="/usr/bin/git --git-dir=$HOME/.dot/ --work-tree=$HOME"
 
 
 # colors everywhere and added brevity
-source $HOME/.config/shell/colors
 alias bc="bc -ql"
 alias c="clear"
 alias cat="bat"
