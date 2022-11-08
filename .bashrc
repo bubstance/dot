@@ -15,6 +15,8 @@ export PATH="$HOME/.local/bin:$HOME/.local/scripts:$PATH"
 
 
 # Put fun stuff here.
+# add some extra color to everything
+source $HOME/.config/shell/colors
 
 # use neovim instead of vim if present
 [ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
@@ -79,7 +81,7 @@ alias qlist="qlist -IRv"
 # 1. sync portage (and run eix post-sync hook, if configured)
 # 2. update all packages in the @world set along with their build dependencies
 # 3. run `depclean` to remove orphans
-update() { emerge --sync; emerge -uvDN --complete-graph=y --with-bdeps=y @world; emerge -c; }
+update() { emerge --sync; emerge -uvDN --complete-graph=y --with-bdeps=y @world; emerge -c; updatedb; }
 
 ######################################
 #                                    #
@@ -133,7 +135,7 @@ alias nf="echo; neofetch"
 # alias nsx="nsxiv"
 alias sx="sxiv"
 alias mv="mv -iv"
-# alias pf="pfetch"
+alias pf="echo; pfetch"
 alias po="popd"
 alias pu="pushd"
 alias rb="reboot"
@@ -150,7 +152,7 @@ alias 'tmux-ks'="tmux kill-server"
 alias top="glances"
 alias v="vim"
 alias which="type -a"
-alias wh="which"
+alias where="locate"
 alias YT="youtube-viewer"
 alias yt="yt-dlp --embed-metadata -i"
 alias yta="yt -x -f bestaudio/best"
