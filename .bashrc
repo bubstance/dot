@@ -50,9 +50,13 @@ pls() { doas $(fc -ln -1); }
 
 # some nice portage aliases and functions
 
+alias depclean="emerge -ac"
 alias discon="dispatch-conf"
-alias ecleand="doas eclean-dist --deep"
-alias ecleanp="doas eclean-pkg --deep"
+alias distclean="doas eclean-dist --deep"
+alias pkgclean="doas eclean-pkg --deep"
+
+# list all installed packages w/ versions and which repo is used
+alias qlist="qlist -IRv"
 
 # list the program that provides the queried command
 # i.e. "how vim" to list everything that references "vim"
@@ -62,7 +66,7 @@ how() { e-file "$@"; }
 world() { eix --color -c --world | less -R; }
 
 # rebuild after installing new kernels (rebuild modules)
-rebuild() { emerge @module-rebuild; }
+rebuild-mod() { emerge @module-rebuild; }
 
 # rebuild Go after upgrading to a new version
 rebuild-go() { emerge @golang-rebuild; }
@@ -72,32 +76,21 @@ rebuild-lib() { emerge @preserved-rebuild; }
 
 1shot() { emerge -av1 "$@"; }
 install() { emerge -av "$@"; }
-plsinstall() { emerge --ask --autounmask=y --autounmask-write "$@"; } # will auto-unmask a package
-depclean() { emerge -ac; }
+plsinstall() { emerge --ask --autounmask=y --autounmask-write "$@"; }
+
 remove() { emerge -avW "$@"; emerge -ac; }
 uninstall() { emerge -avW "$@"; emerge -ac; }
 yeet() { emerge -avW "$@"; emerge -ac; }
 
-# list all installed packages w/ versions and which repo is used
-alias qlist="qlist -IRv"
+# AVOID USING UNLESS YOU KNOW WHAT YOU'RE DOING
+unmerge() { emerge -aC "$@"; emerge -ac; }
 
 # update *everything*
 # 1. sync portage (and run eix post-sync hook, if configured)
 # 2. update all packages in the @world set along with their build dependencies
 # 3. run `depclean` to remove orphans
+# 4. update mlocate database and cache
 update() { emerge --sync; emerge -uvDN --complete-graph=y --with-bdeps=y @world; emerge -c; updatedb; }
-
-######################################
-#                                    #
-#           **DO NOT USE**           #
-#  this is a "dirty" uninstallation; #
-# it removes packages without regard #
-#       for their dependencies       #
-#                                    #
-######################################
-
-# AVOID USING UNLESS YOU KNOW WHAT YOU'RE DOING
-unmerge() { emerge -aC "$@"; emerge -ac; }
 
 
 
