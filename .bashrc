@@ -48,7 +48,11 @@ pls() { doas $(fc -ln -1); }
 
 
 
-# some nice portage functions
+# some nice portage aliases and functions
+
+alias discon="dispatch-conf"
+alias ecleand="doas eclean-dist --deep"
+alias ecleanp="doas eclean-pkg --deep"
 
 # list the program that provides the queried command
 # i.e. "how vim" to list everything that references "vim"
@@ -111,7 +115,6 @@ alias chmow="chmod +w"
 alias chmall="chmod 777"
 alias cp="cp -iv"
 alias diff="diff --color=auto"
-alias discon="dispatch-conf"
 alias e="$EDITOR"
 alias ed="clear; ed -vp '${NL}( ${MAG}*${RC}._.) ${B}:${RC}'"
 # alias emacs="emacsclient -ac 'emacs'"
