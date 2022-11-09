@@ -12,9 +12,5 @@ fi
 
 export PATH="$HOME/.local/bin:$HOME/.local/scripts:$PATH"
 
-
-
-# Put fun stuff here.
-# add some extra color to everything
 source $HOME/.config/shell/colors
 source $HOME/.config/shell/aliases
