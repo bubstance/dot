@@ -75,7 +75,7 @@ unmerge() { emerge -aC "$@"; emerge -ac; updatedb; }
 # 2. update all packages in the @world set along with their build dependencies
 # 3. run `depclean` to remove orphans
 # 4. update mlocate database and cache
-update() { emerge --sync; emerge -quvDN --complete-graph=y --with-bdeps=y @world; emerge -c; updatedb; }
+update() { emerge --sync; emerge -quDN --complete-graph=y --with-bdeps=y @world; emerge -c; updatedb; }
 
 
 
