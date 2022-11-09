@@ -28,7 +28,7 @@ complete -cf doas
 
 # ---{ aliases / functions }---
 # doas/sudo not required for some system commands
-for command in dispatch-conf emerge eselect mount poweroff rc-service rc-update reboot shutdown su umount updatedb; do
+for command in emerge eselect mount poweroff rc-service rc-update reboot shutdown su umount updatedb; do
     alias $command="doas $command"
     # alias $command="sudo $command"
 done; unset command
@@ -51,9 +51,9 @@ pls() { doas $(fc -ln -1); }
 # some nice portage aliases and functions
 
 alias depclean="emerge -ac"
-alias discon="dispatch-conf"
-alias distclean="doas eclean-dist --deep"
-alias pkgclean="doas eclean-pkg --deep"
+alias discon="doas dispatch-conf"
+alias distclean="doas eclean-dist --deep; updatedb"
+alias pkgclean="doas eclean-pkg --deep; updatedb"
 
 # list all installed packages w/ versions and which repo is used
 alias qlist="qlist -IRv"
@@ -74,44 +74,42 @@ rebuild-go() { emerge @golang-rebuild; }
 # rebuild when using new libraries
 rebuild-lib() { emerge @preserved-rebuild; }
 
-1shot() { emerge -av1 "$@"; }
-install() { emerge -av "$@"; }
+1shot() { emerge -av1 "$@"; updatedb; }
+install() { emerge -av "$@"; updatedb; }
 plsinstall() { emerge --ask --autounmask=y --autounmask-write "$@"; }
 
-remove() { emerge -avW "$@"; emerge -ac; }
-uninstall() { emerge -avW "$@"; emerge -ac; }
-yeet() { emerge -avW "$@"; emerge -ac; }
+remove() { emerge -avW "$@"; emerge -ac; updatedb; }
+uninstall() { emerge -avW "$@"; emerge -ac; updatedb; }
+yeet() { emerge -avW "$@"; emerge -ac; updatedb; }
 
 # AVOID USING UNLESS YOU KNOW WHAT YOU'RE DOING
-unmerge() { emerge -aC "$@"; emerge -ac; }
+unmerge() { emerge -aC "$@"; emerge -ac; updatedb; }
 
 # update *everything*
 # 1. sync portage (and run eix post-sync hook, if configured)
 # 2. update all packages in the @world set along with their build dependencies
 # 3. run `depclean` to remove orphans
 # 4. update mlocate database and cache
-update() { emerge --sync; emerge -uvDN --complete-graph=y --with-bdeps=y @world; emerge -c; updatedb; }
+update() { emerge --sync; emerge -quvDN --complete-graph=y --with-bdeps=y @world; emerge -c; updatedb; }
 
 
 
-# git dotfiles alias
-alias dot="/usr/bin/git --git-dir=$HOME/.dot/ --work-tree=$HOME"
 
-
-
-# colors everywhere and added brevity
-alias bc="bc -ql"
-alias c="clear"
-alias cat="bat"
-alias chmox="chmod +x"
-alias chmow="chmod +w"
-alias chmall="chmod 777"
-alias cp="cp -iv"
+# colors everywhere
 alias diff="diff --color=auto"
-alias e="$EDITOR"
-alias ed="clear; ed -vp '${NL}( ${MAG}*${RC}._.) ${B}:${RC}'"
-# alias emacs="emacsclient -ac 'emacs'"
-alias ffmpeg="ffmpeg -hide_banner"
+alias grep="grep --color=auto"
+alias ip="ip -color=auto"
+alias ls="ls -hN --color=auto --group-directories-first"
+alias la="ls -A"
+alias ll="ls -lA"
+
+# commands swaps
+alias cat="bat"
+alias top="glances"
+alias which="type -a"
+alias where="locate"
+
+# git abbreviations
 alias g="git"
 alias ga="git add"
 alias 'ga.'="git add ."
@@ -119,36 +117,43 @@ alias 'g.'="git init && git add ."
 alias gc="git commit"
 alias gcs="git commit -S"
 alias gp="git push"
-alias grep="grep --color=auto"
-alias ip="ip -color=auto"
+
+# git dotfiles alias
+# requires cloning remote dotfiles repo as a bare repository;
+# ex: git clone --bare https://github.com/<your_user_here>/dot.git ~/.dot
+# usage: use `dot` instead of `git` to keep home directory files under VC;
+#        git will automagically make paths and keep everything tidy
+#
+# ex: dot remote add origin https://github.com/path/to/repo
+#     dot add .local/scripts/example.sh
+#     dot commit -m "adding new script"
+#     dot push --set-upstream origin master
+alias dot="/usr/bin/git --git-dir=$HOME/.dot/ --work-tree=$HOME"
+
+# things you'll always want (brevity + general settings)
+alias bc="bc -ql"
+alias c="clear"
+alias chmox="chmod +x"
+alias chmow="chmod +w"
+alias chmall="chmod 777"
+alias cp="cp -iv"
+alias e="$EDITOR"
+alias ed="clear; ed -vp '${NL}( ${MAG}*${RC}._.) ${B}:${RC}'"
+alias ffmpeg="ffmpeg -hide_banner"
 alias ka="killall"
-# alias lf="lfub"
-alias ls="ls -hN --color=auto --group-directories-first"
-alias la="ls -A"
-alias ll="ls -lA"
 alias mkd="mkdir -pv"
-alias nf="echo; neofetch"
-# alias nsx="nsxiv"
-alias sx="sxiv"
 alias mv="mv -iv"
+alias nf="echo; neofetch"
 alias pf="echo; pfetch"
 alias po="popd"
 alias pu="pushd"
 alias rb="reboot"
 alias rm="rm -iv"
-# alias scim="sc-im"
 alias sdn="shutdown -h now"
+alias sx="sxiv"
 alias t10="du -ah . | sort -hr | head -n 10"
 alias 'tmux-ks'="tmux kill-server"
-# alias tre="trash-empty"
-# alias trl="trash-list"
-# alias trm="trash-rm"
-# alias trp="trash-put"
-# alias trr="trash-restore"
-alias top="glances"
 alias v="vim"
-alias which="type -a"
-alias where="locate"
 alias YT="youtube-viewer"
 alias yt="yt-dlp --embed-metadata -i"
 alias yta="yt -x -f bestaudio/best"
@@ -163,8 +168,19 @@ alias '...'="cd ../.."
 alias '....'="cd ../../.."
 alias '.....'="cd ../../../.."
 alias '......'="cd ../../../../.."
-alias 'cd..'="cd .."
+alias 'cd..'=".."
 alias 'cd-'="cd -"
-alias '+'="pu"
 alias '_'="po"
+alias '+'="pu"
 alias ':q'="exit"
+
+# optional commands (need to be installed)
+# alias emacs="emacsclient -ac 'emacs'"
+# alias lf="lfub"
+# alias nsx="nsxiv"
+# alias scim="sc-im"
+# alias tre="trash-empty"
+# alias trl="trash-list"
+# alias trm="trash-rm"
+# alias trp="trash-put"
+# alias trr="trash-restore"

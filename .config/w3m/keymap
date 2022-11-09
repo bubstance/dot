@@ -1,0 +1,12 @@
+keymap h PREV
+keymap j NEXT_LINK
+keymap k PREV_LINK
+keymap l GOTO_LINK
+keymap < PREV
+keymap > NEXT
+keymap u PEEK
+keymap U GOTO
+keymap [ LINK_BEGIN
+keymap ] LINK_END
+keymap C-t NEW_TAB
+keymap C-w CLOSE_TAB
