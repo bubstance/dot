@@ -58,12 +58,13 @@ rebuild-go() { emerge @golang-rebuild; }
 # rebuild when using new libraries
 rebuild-lib() { emerge @preserved-rebuild; }
 
+einstall() { emerge -av "$@"; updatedb; }
+eremove() { emerge -avW "$@"; emerge -ac; updatedb; }
+
 1shot() { emerge -av1 "$@"; updatedb; }
-install() { emerge -av "$@"; updatedb; }
 plsinstall() { emerge --ask --autounmask=y --autounmask-write "$@"; }
 
-remove() { emerge -avW "$@"; emerge -ac; updatedb; }
-uninstall() { emerge -avW "$@"; emerge -ac; updatedb; }
+gimme() { emerge -av "$@"; updatedb; }
 yeet() { emerge -avW "$@"; emerge -ac; updatedb; }
 
 # AVOID USING UNLESS YOU KNOW WHAT YOU'RE DOING
