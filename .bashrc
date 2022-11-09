@@ -12,5 +12,4 @@ fi
 
 export PATH="$HOME/.local/bin:$HOME/.local/scripts:$PATH"
 
-source $HOME/.config/shell/colors
 source $HOME/.config/shell/aliases
