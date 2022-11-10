@@ -1,7 +1,5 @@
 #!/bin/sh
 
-source $HOME/.config/shell/colors
-
 # use neovim instead of vim if present
 [ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
 

@@ -35,6 +35,7 @@ set nu relativenumber
 set path+=**
 set scrolloff=4
 set shiftwidth=4
+set showtabline=2
 set sidescrolloff=4
 set signcolumn=yes
 set smartcase
@@ -126,9 +127,7 @@ call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"
     Plug 'xolox/vim-misc'
     Plug 'xolox/vim-session'
   " for looks
-    Plug 'morhetz/gruvbox'
-    Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
+    Plug 'iandwelker/rose-pine-vim'
 call plug#end()
 
 " --{ colors and themes}--
@@ -137,26 +136,19 @@ call plug#end()
     let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
     set t_Co=256
 
+    " colorscheme and theme
     set background=dark
-
-    " colorscheme gruvbox
+    colorscheme rose-pine-dark
 
     " fixes sign column colors if using gitgutter
     highlight! link SignColumn LineNr
     autocmd ColorScheme * highlight! link SignColumn LineNr
 
-" vim-airline tweaks
-    let g:airline#extensions#branch#enabled=1
-    let g:airline#extensions#tabline#enabled=1
-    let g:airline#extensions#tabline#formatter='unique_tail'
-    let g:airline_powerline_fonts=0
-    let g:airline_section_z = airline#section#create_right(['L:%l','C:%c'])
-    let g:airline_skip_empty_sections=1
-    let g:airline_theme='gruvbox'
-
-    if !exists('airline_symbols')
-        let g:airline_symbols = {}
-    endif
+    " set status and tab lines to term colors
+    hi StatusLine ctermbg=0 cterm=NONE
+    hi TabLineFill ctermbg=0 cterm=NONE
+    hi TabLine ctermbg=0 cterm=NONE
+    hi TabLineSel ctermbg=0 cterm=NONE
 
 " fzf customization
     let g:fzf_layout = { 'up': '~90%', 'window': { 'height': 0.8, 'width': 0.8, 'xoffset': 0.5, 'yoffset': 0.5 } }
@@ -181,6 +173,8 @@ call plug#end()
         \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
     let NERDTreeMinimalUI=1
     let NERDTreeShowHidden=1
+    let g:NERDTreeDirArrowExpandable = '+'
+    let g:NERDTreeDirArrowCollapsable = '~'
 
 " vim-session settings
     let g:session_autosave='no'
