@@ -104,6 +104,7 @@ set wildmode=list,longest,full
 call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"'))
   " for function
     Plug 'airblade/vim-gitgutter'
+    Plug 'gentoo/gentoo-syntax'
     Plug 'jiangmiao/auto-pairs'
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
