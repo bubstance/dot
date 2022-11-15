@@ -1,4 +1,3 @@
 #!/bin/sh
 wttr="$HOME/.cache/weather"
 curl -sf "https://wttr.in/85382?u" > $wttr
-less $wttr
