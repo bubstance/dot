@@ -82,9 +82,10 @@ update() { emerge --sync; emerge -quDN --complete-graph=y --with-bdeps=y @world;
 alias diff="diff --color=auto"
 alias grep="grep --color=auto"
 alias ip="ip -color=auto"
-alias ls="exa -h --group-directories-first"
+alias ls="exa --group-directories-first"
 alias la="exa -a --group-directories-first"
-alias ll="exa -la --group-directories-first"
+alias ll="exa -lah --group-directories-first"
+alias lt="exa -lahT --group-directories-first"
 
 # commands swaps
 alias cat="bat"
@@ -161,5 +162,4 @@ alias ':q'="exit"
 
 # optional commands (need to be installed)
 # alias emacs="emacsclient -ac 'emacs'"
-# alias nsx="nsxiv"
 # alias scim="sc-im"
