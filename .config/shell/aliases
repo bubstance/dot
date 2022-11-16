@@ -104,11 +104,11 @@ alias gp="git push"
 
 # git dotfiles alias
 # requires cloning remote dotfiles repo as a bare repository;
-# ex: git clone --bare https://github.com/<your_user_here>/dot.git ~/.dot
+# ex: git clone --bare git@github.com:<your_user_here>/<repo_name>.git ~/.dot
 # usage: use `dot` instead of `git` to keep home directory files under VC;
 #        git will automagically make paths and keep everything tidy
 #
-# ex: dot remote add origin https://github.com/path/to/repo
+# ex: dot remote add origin git@github.com:<your_user_here>/<repo_name>.git ~/.dot
 #     dot add .local/scripts/example.sh
 #     dot commit -m "adding new script"
 #     dot push --set-upstream origin master
