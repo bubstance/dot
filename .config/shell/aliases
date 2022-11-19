@@ -62,14 +62,14 @@ eremove() { emerge -avW "$@"; emerge -ac; updatedb; }
 1shot() { emerge -av1 "$@"; updatedb; }
 plsinstall() { emerge --ask --autounmask=y --autounmask-write "$@"; }
 
-gimme() { emerge -av "$@"; updatedb; }
-yeet() { emerge -avW "$@"; emerge -ac; updatedb; }
+alias gimme="einstall"
+alias yeet="eremove"
 
 # AVOID USING UNLESS YOU KNOW WHAT YOU'RE DOING
 unmerge() { emerge -aC "$@"; emerge -ac; updatedb; }
 
 # update *everything*
-# 1. sync portage (and run eix post-sync hook, if configured)
+# 1. sync portage (via git and run eix post-sync hook, if configured)
 # 2. update all packages in the @world set along with their build dependencies
 # 3. run `depclean` to remove orphans
 # 4. update mlocate database and cache
