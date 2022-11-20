@@ -10,7 +10,7 @@ complete -cf doas
 
 # ---{ aliases / functions }---
 # doas/sudo not required for some system commands
-for command in emerge eselect mount poweroff rc-service rc-update reboot shutdown su umount updatedb; do
+for command in emerge eselect genlop mount poweroff rc-service rc-update reboot shutdown su umount updatedb; do
     alias $command="doas $command"
     # alias $command="sudo $command"
 done; unset command
