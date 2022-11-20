@@ -1,0 +1,1 @@
+/home/kgr/.config/shell/zshrc
