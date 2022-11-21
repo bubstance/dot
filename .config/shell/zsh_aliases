@@ -1,0 +1,161 @@
+#!/bin/sh
+
+# use neovim instead of vim if present
+[ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
+
+# ---{ aliases / functions }---
+# doas/sudo not required for some system commands
+for command in emerge eselect genlop mount poweroff rc-service rc-update reboot shutdown su umount updatedb; do
+    alias $command="doas $command"
+    # alias $command="sudo $command"
+done; unset command
+
+# replacement for `sudoedit` when using `doas` for permissisons
+alias doasedit="doas rnano"
+alias doedit="doasedit"
+alias sudoedit="doasedit"
+
+# quickly elevate last command (same as `doas !!` or `sudo !!`)
+bruh() { doas $(fc -ln -1); }
+cmon() { doas $(fc -ln -1); }
+doit() { doas $(fc -ln -1); }
+dude() { doas $(fc -ln -1); }
+ffs() { doas $(fc -ln -1); }
+pls() { doas $(fc -ln -1); }
+
+
+
+# some nice portage aliases and functions
+
+alias depclean="emerge -ac"
+alias discon="doas dispatch-conf"
+alias distclean="doas eclean-dist --deep; updatedb"
+alias pkgclean="doas eclean-pkg --deep; updatedb"
+
+# list all installed packages w/ versions and which repo is used
+alias qlist="qlist -IRv"
+
+# list the program that provides the queried command
+# i.e. "how vim" to list everything that references "vim"
+how() { emerge --search "$@"; e-file "$@"; }
+
+# list all packages in the @world set and all available versions (w/ color!)
+world() { eix --color -c --world | less -R; }
+
+# rebuild after installing new kernels (rebuild modules)
+rebuild-mod() { emerge @module-rebuild; }
+
+# rebuild Go after upgrading to a new version
+rebuild-go() { emerge @golang-rebuild; }
+
+# rebuild when using new libraries
+rebuild-lib() { emerge @preserved-rebuild; }
+
+einstall() { emerge -av "$@"; updatedb; }
+eremove() { emerge -avW "$@"; emerge -ac; updatedb; }
+
+1shot() { emerge -av1 "$@"; updatedb; }
+plsinstall() { emerge --ask --autounmask=y --autounmask-write "$@"; }
+
+alias gimme="einstall"
+alias yeet="eremove"
+
+# AVOID USING UNLESS YOU KNOW WHAT YOU'RE DOING
+unmerge() { emerge -aC "$@"; emerge -ac; updatedb; }
+
+# update *everything*
+# 1. sync portage (via git and run eix post-sync hook, if configured)
+# 2. update all packages in the @world set along with their build dependencies
+# 3. run `depclean` to remove orphans
+# 4. update mlocate database and cache
+update() { emerge --sync; emerge -quDN --complete-graph=y --with-bdeps=y @world; emerge -c; updatedb; }
+
+
+
+
+# colors everywhere
+alias diff="diff --color=auto"
+alias grep="grep --color=auto"
+alias ip="ip -color=auto"
+alias ls="exa --group-directories-first"
+alias la="exa -a --group-directories-first"
+alias ll="exa -lah --group-directories-first"
+alias lt="exa -lahT --group-directories-first"
+
+# commands swaps
+alias cat="bat"
+alias top="glances"
+alias which="type -a"
+alias where="locate"
+
+# git abbreviations
+alias g="git"
+alias ga="git add"
+alias 'ga.'="git add ."
+alias 'g.'="git init && git add ."
+alias gc="git commit"
+alias gcs="git commit -S"
+alias gp="git push"
+
+# git dotfiles alias
+# requires cloning remote dotfiles repo as a bare repository;
+# ex: git clone --bare git@github.com:<your_user_here>/<repo_name>.git ~/.dot
+# usage: use `dot` instead of `git` to keep home directory files under VC;
+#        git will automagically make paths and keep everything tidy
+#
+# ex: dot remote add origin git@github.com:<your_user_here>/<repo_name>.git ~/.dot
+#     dot add .local/scripts/example.sh
+#     dot commit -m "adding new script"
+#     dot push --set-upstream origin master
+alias dot="/usr/bin/git --git-dir=$HOME/.dot/ --work-tree=$HOME"
+
+# things you'll always want (brevity + general settings)
+# make the following interactive
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias rm="rm -iv"
+
+alias bc="bc -ql"
+alias c="clear"
+alias chmox="chmod +x"
+alias chmow="chmod +w"
+alias chmall="chmod 777"
+alias e="$EDITOR"
+alias ed="clear; ed -vp '${NL}( ${MAG}*${RC}._.) ${B}:${RC}'"
+alias ffmpeg="ffmpeg -hide_banner"
+alias ka="killall"
+alias mkd="mkdir -pv"
+alias nf="echo; neofetch"
+alias pf="echo; pfetch"
+alias po="popd"
+alias pu="pushd"
+alias rb="reboot"
+alias sdn="shutdown -h now"
+alias sx="sxiv"
+alias iv="sx"
+alias t10="du -ah . | sort -hr | head -n 10"
+alias 'tmux-ks'="tmux kill-server"
+alias v="vim"
+alias YT="youtube-viewer"
+alias yt="yt-dlp --embed-metadata -i"
+alias yta="yt -x -f bestaudio/best"
+alias z="zathura"
+
+# handy navigation shortcuts
+alias '?'="duck"
+alias '??'="google"
+alias '???'="bing"
+alias '..'="cd .."
+alias '...'="cd ../.."
+alias '....'="cd ../../.."
+alias '.....'="cd ../../../.."
+alias '......'="cd ../../../../.."
+alias 'cd..'=".."
+alias 'cd-'="cd -"
+# alias '_'="po"
+# alias '+'="pu"
+alias ':q'="exit"
+
+# optional commands (need to be installed)
+# alias emacs="emacsclient -ac 'emacs'"
+# alias scim="sc-im"

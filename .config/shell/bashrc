@@ -12,7 +12,7 @@ fi
 
 export PATH="$HOME/.local/bin:$HOME/.local/scripts:$PATH"
 
-source $HOME/.config/shell/aliases
+source $HOME/.config/shell/bash_aliases
 source $HOME/.config/shell/colors
 
 # ANSI color escapes
