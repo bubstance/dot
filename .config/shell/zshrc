@@ -14,7 +14,7 @@ setopt interactive_comments
 HISTFILE=~/.config/shell/zsh_hist
 HISTSIZE=10000000
 SAVEHIST=10000000
-zstyle :compinstall filename '/home/kgr/.zshrc'
+zstyle :compinstall filename '$HOME/.zshrc'
 
 # Basic auto/tab complete:
 autoload -U compinit
