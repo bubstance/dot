@@ -75,10 +75,10 @@ rebuild-go() { emerge @golang-rebuild; }
 # rebuild when using new libraries
 rebuild-lib() { emerge @preserved-rebuild; }
 
-einstall() { emerge -a "$@"; updatedb; }
-eremove() { emerge -aW "$@"; emerge -ac; updatedb; }
+einstall() { emerge -av "$@"; updatedb; }
+eremove() { emerge -avW "$@"; emerge -ac; updatedb; }
 
-1shot() { emerge -a1 "$@"; updatedb; }
+1shot() { emerge -av1 "$@"; updatedb; }
 plsinstall() { emerge --ask --autounmask=y --autounmask-write "$@"; }
 
 alias gimme="einstall"
@@ -89,8 +89,8 @@ alias yeet="eremove"
 # 2. update all packages in the @world set along with their build dependencies
 # 3. run `depclean` to remove orphans
 # 4. update mlocate database and cache
-update() { emerge --sync; emerge -quDN --complete-graph=y --with-bdeps=y @world; emerge -c; updatedb; }
-quick-update() { emerge -auDN --complete-graph=y --with-bdeps=y @world; }
+update() { emerge --sync; emerge -quvDN --complete-graph=y --with-bdeps=y @world; emerge -c; updatedb; }
+quick-update() { emerge -auvDN --complete-graph=y --with-bdeps=y @world; }
 alias fup="update"
 alias qup="quick-update"
 
