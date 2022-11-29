@@ -26,7 +26,7 @@ set expandtab
 set go=a
 set ignorecase
 set incsearch
-set laststatus=0
+set laststatus=2
 set lcs=tab:\|\ ,lead:•,trail:~
 set mouse=a
 set noerrorbells
@@ -192,7 +192,30 @@ call plug#end()
 " ctags integration
     command! MakeTags !ctags -R .
 
+" git branch in status
+    function! GitBranch()
+        return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+    endfunction
 
+    function! StatuslineGit()
+        let l:branchname = GitBranch()
+        return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+    endfunction
+
+    set statusline=
+    set statusline+=%{StatuslineGit()}
+    set statusline+=%#LineNr#
+    set statusline+=\ %f
+    set statusline+=%m
+    set statusline+=\ %r
+    set statusline+=%=
+    set statusline+=%y
+    set statusline+=\ \[%{&ff}
+    set statusline+=\,\ %{strlen(&fenc)?&fenc:'none'}\]
+    set statusline+=\ %*
+    set statusline+=\ %l:%c
+    set statusline+=\ %P
+    set statusline+=\ \[%L\]
 
 " ---{ mappings }---
 " buffers
