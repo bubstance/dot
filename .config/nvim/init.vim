@@ -26,7 +26,6 @@ set expandtab
 set go=a
 set ignorecase
 set incsearch
-set laststatus=2
 set lcs=tab:\|\ ,lead:•,trail:~
 set mouse=a
 set noerrorbells
@@ -105,6 +104,7 @@ set wildmode=list,longest,full
 call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"'))
   " for function
     Plug 'airblade/vim-gitgutter'
+    Plug 'gentoo/gentoo-syntax'
     Plug 'jiangmiao/auto-pairs'
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
@@ -126,25 +126,24 @@ call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"
     Plug 'xolox/vim-misc'
     Plug 'xolox/vim-session'
   " for looks
-    Plug 'gentoo/gentoo-syntax'
     Plug 'iandwelker/rose-pine-vim'
 call plug#end()
 
 " --{ colors and themes}--
-    " required for some terminals, doesn't hurt others
+" required for some terminals, doesn't seem to hurt others
     let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
     let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
     set t_Co=256
 
-    " colorscheme and theme
+" colorscheme and theme
     set background=dark
     colorscheme rose-pine-dark
 
-    " fixes sign column colors if using gitgutter
+" fixes sign column colors if using gitgutter
     highlight! link SignColumn LineNr
     autocmd ColorScheme * highlight! link SignColumn LineNr
 
-    " set status and tab lines to term colors
+" set status and tab lines to term colors
     hi StatusLine ctermbg=0 cterm=NONE
     hi TabLineFill ctermbg=0 cterm=NONE
     hi TabLine ctermbg=0 cterm=NONE
@@ -160,7 +159,7 @@ call plug#end()
     map <Leader>f :Files<CR>
     map <Leader>F :AllFiles<CR>
 
-    " NERDTree customization
+" NERDTree customization
     nnoremap <expr> <Leader>n g:NERDTree.IsOpen() ? ':NERDTreeClose<CR>' : @% == '' ? ':NERDTree<CR>' : ':NERDTreeFind<CR>'
     nmap <Leader>N :NERDTreeFind<CR>
     autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -192,7 +191,7 @@ call plug#end()
 " ctags integration
     command! MakeTags !ctags -R .
 
-" git branch in status
+" custom statusline
     function! GitBranch()
         return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
     endfunction
@@ -202,6 +201,7 @@ call plug#end()
         return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
     endfunction
 
+    set laststatus=2
     set statusline=
     set statusline+=%{StatuslineGit()}
     set statusline+=%#LineNr#
@@ -210,18 +210,18 @@ call plug#end()
     set statusline+=\ %r
     set statusline+=%=
     set statusline+=%y
-    set statusline+=\ \[%{&ff}
-    set statusline+=\,\ %{strlen(&fenc)?&fenc:'none'}\]
+    set statusline+=\ \[%{strlen(&fenc)?&fenc:'none'}
+    set statusline+=\,\ %{&ff}\]
     set statusline+=\ %*
-    set statusline+=\ %l:%c
-    set statusline+=\ %P
-    set statusline+=\ \[%L\]
+    set statusline+=\ L:%l\ C:%c
+    set statusline+=\ \[%P\]
+    " set statusline+=\ \[%L\]
 
 " ---{ mappings }---
 " buffers
     map <Leader>bs :buffers<CR>:b
-    map <Leader>bd :bd!<CR>
-    map <Leader>bk :buffers<CR>:bd!
+    map <Leader>bd :buffers<CR>:bd!
+    map <Leader>bk :bd!<CR>
     map <Leader>bl :buffers<CR>
     map <Leader>bn :bn<CR>
     map <Leader>bp :bp<CR>
@@ -246,10 +246,10 @@ call plug#end()
     noremap <Leader>0 :tablast<CR>
 
 " insert mode navigation
-    inoremap <C-h> <Left>
-    inoremap <C-j> <Esc>A
-    inoremap <C-k> <Esc>I
-    inoremap <C-l> <Right>
+    inoremap <M-h> <Left>
+    inoremap <M-j> <Esc>A
+    inoremap <M-k> <Esc>I
+    inoremap <M-l> <Right>
 
 " window movements
     map <Leader>= <C-w>=
