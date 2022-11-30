@@ -1,0 +1,30 @@
+[global]
+    frame_width = 0
+    monitor = 0
+    follow = keyboard
+    width = 370
+    height = 350
+    offset = 0x19
+    padding = 2
+    horizontal_padding = 2
+    transparency = 15
+    font = Monospace 10
+    format = "<b>%s</b>\n%b"
+
+[base16_low]
+    msg_urgency = low
+    background = "#002b36"
+    foreground = "#839496"
+    timeout = 3
+
+[base16_normal]
+    msg_urgency = normal
+    background = "#073642"
+    foreground = "#839496"
+    timeout = 5
+
+[base16_high]
+    msg_urgency = critical
+    background = "#dc322f"
+    foreground = "#eee8d5"
+    timeout = 10

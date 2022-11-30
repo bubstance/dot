@@ -1,0 +1,50 @@
+\:q
+\:q
+which update
+\which update
+c
+which +
+\which +
+which pu
+which po
+cd
+c
+pu /
+c
+pwd
+where ls
+c
+pwd
+pu /etc/portage
+cd /var/db/repos
+ls
+c
+dirs
+pu /etc/portage
+po
+po
+po
+c
+echo $0
+zsh -v
+\:q
+uname -a
+c
+uname -a
+hnow
+c
+now
+isod
+c
+? linux
+c
+v .config/shell/zsh_aliases
+v .local/scripts/duck
+v .local/scripts/google
+v .local/scripts/bing
+v .local/scripts/wiki
+ls .local/scripts
+wttr.in
+wttr
+c
+? linux

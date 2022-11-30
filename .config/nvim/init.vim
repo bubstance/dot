@@ -149,6 +149,7 @@ call plug#end()
     hi TabLine ctermbg=0 cterm=NONE
     hi TabLineSel ctermbg=0 cterm=NONE
 
+" --{ plugin tweaks and hacks }--
 " fzf customization
     let g:fzf_layout = { 'up': '~90%', 'window': { 'height': 0.8, 'width': 0.8, 'xoffset': 0.5, 'yoffset': 0.5 } }
     let $FZF_DEFAULT_OPTS = '--layout=reverse --info=inline'
@@ -192,30 +193,29 @@ call plug#end()
     command! MakeTags !ctags -R .
 
 " custom statusline
+    " git branch in statusline
     function! GitBranch()
         return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
     endfunction
 
     function! StatuslineGit()
         let l:branchname = GitBranch()
-        return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+        return strlen(l:branchname) > 0?' '.l:branchname.' ':''
     endfunction
 
     set laststatus=2
     set statusline=
-    set statusline+=%{StatuslineGit()}
     set statusline+=%#LineNr#
     set statusline+=\ %f
     set statusline+=%m
     set statusline+=\ %r
     set statusline+=%=
-    set statusline+=%y
-    set statusline+=\ \[%{strlen(&fenc)?&fenc:'none'}
-    set statusline+=\,\ %{&ff}\]
+    " set statusline+=%y
+    " set statusline+=\ \[%{strlen(&fenc)?&fenc:'none'}
+    " set statusline+=\|%{&ff}\]
+    set statusline+=\ \[\ %l:%c\ \|\ %P\ \]
     set statusline+=\ %*
-    set statusline+=\ L:%l\ C:%c
-    set statusline+=\ \[%P\]
-    " set statusline+=\ \[%L\]
+    set statusline+=%{StatuslineGit()}
 
 " ---{ mappings }---
 " buffers
