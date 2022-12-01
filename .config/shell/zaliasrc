@@ -30,7 +30,7 @@ for command in emerge eselect genlop mount poweroff rc-service rc-update reboot 
     # alias $command="sudo $command"
 done; unset command
 
-se() { cd ~/.local/bin; $EDITOR $(fzf) ;}
+se() { cd ~/.local/scripts; $EDITOR $(fzf) ;}
 
 # quickly elevate last command (same as `doas !!` or `sudo !!`)
 bruh() { doas $(fc -ln -1); }
@@ -95,7 +95,9 @@ alias \
 unmerge() { emerge -aC "$@"; emerge -ac; updatedb; }
 
 # fuck yo shit the fuck up, dawg
-# forkit() { forkit & | forkit; }
+# forkit() {
+#   forkit | forkit &
+#   }
 
 # burn this motherfucker to the ground
 # **DO NOT USE THIS UNLESS YOU WANT TO COMPLETELY DESTROY YOUR INSTALLATION
@@ -120,8 +122,8 @@ alias \
 # commands swaps
 alias \
     cat="bat" \
+    lf="lfub" \
     top="glances" \
-    which="type -a" \
     where="locate"
 
 # git abbreviations
