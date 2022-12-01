@@ -1,1 +1,1 @@
-.config/shell/bash_profile
+.config/shell/bprofile

@@ -10,5 +10,7 @@ if [[ $- != *i* ]] ; then
     return
 fi
 
-source $HOME/.config/shell/bash_aliases
-source $HOME/.config/shell/colors
+# Load aliases and shortcuts if existent
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc"
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/baliasrc" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/baliasrc"
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/colors" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/colors"

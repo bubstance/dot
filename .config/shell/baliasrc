@@ -1,7 +1,33 @@
 #!/bin/sh
 
+# ANSI color escapes
+GRA=$'\e[1;30m' # gray
+RED=$'\e[1;31m' # red
+GRN=$'\e[1;32m' # green
+YEL=$'\e[1;33m' # yellow
+BLU=$'\e[1;34m' # blue
+MAG=$'\e[1;35m' # magenta
+CYA=$'\e[1;36m' # cyan
+WHI=$'\e[1;37m' # white
+
+# ANSI text decorations
+B=$'\e[1m' # bold
+U=$'\e[4m' # underline
+F=$'\e[5m' # flashing/blinking
+
+# reset all text colors and decorations
+RC=$'\e[0m'
+
 # use neovim instead of vim if present
 [ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
+
+# Use $XINITRC variable if file exists.
+[ -f "$XINITRC" ] && alias startx="startx $XINITRC"
+
+# tab completion for doas
+# -c : Complete arguments as if they were commands
+# -f : Complete arguments as if they were directory names (default behaviour)
+complete -cf doas
 
 # ---{ aliases / functions }---
 # doas/sudo not required for some system commands
@@ -9,6 +35,8 @@ for command in emerge eselect genlop mount poweroff rc-service rc-update reboot 
     alias $command="doas $command"
     # alias $command="sudo $command"
 done; unset command
+
+se() { cd ~/.local/bin; $EDITOR $(fzf) ;}
 
 # replacement for `sudoedit` when using `doas` for permissisons
 alias doasedit="doas rnano"
@@ -30,14 +58,15 @@ pls() { doas $(fc -ln -1); }
 alias depclean="emerge -ac"
 alias discon="doas dispatch-conf"
 alias distclean="doas eclean-dist --deep; updatedb"
+alias genping="ping -c 5 gentoo.org"
 alias pkgclean="doas eclean-pkg --deep; updatedb"
 
 # list all installed packages w/ versions and which repo is used
 alias qlist="qlist -IRv"
 
-# list the program that provides the queried command
+# list all programs known to portage that include the keyword
 # i.e. "how vim" to list everything that references "vim"
-how() { emerge --search "$@"; e-file "$@"; }
+how() { emerge --search "$@"; equery l -p *"$@"*; eix "$@"; e-file "$@"; }
 
 # list all packages in the @world set and all available versions (w/ color!)
 world() { eix --color -c --world | less -R; }
@@ -60,16 +89,29 @@ plsinstall() { emerge --ask --autounmask=y --autounmask-write "$@"; }
 alias gimme="einstall"
 alias yeet="eremove"
 
-# AVOID USING UNLESS YOU KNOW WHAT YOU'RE DOING
-unmerge() { emerge -aC "$@"; emerge -ac; updatedb; }
-
 # update *everything*
 # 1. sync portage (via git and run eix post-sync hook, if configured)
 # 2. update all packages in the @world set along with their build dependencies
 # 3. run `depclean` to remove orphans
 # 4. update mlocate database and cache
-update() { emerge --sync; emerge -quDN --complete-graph=y --with-bdeps=y @world; emerge -c; updatedb; }
+update() { emerge --sync; emerge -quDN --complete-graph=y --with-bdeps=y @world; emerge -ac; updatedb; }
+quick-update() { emerge -auvDN --complete-graph=y --with-bdeps=y @world; }
+alias fup="update"
+alias qup="quick-update"
 
+# AVOID USING UNLESS YOU KNOW WHAT YOU'RE DOING
+unmerge() { emerge -aC "$@"; emerge -ac; updatedb; }
+
+# fuck yo shit the fuck up, dawg
+# forkit() { forkit & | forkit; }
+
+# burn this motherfucker to the ground
+# **DO NOT USE THIS UNLESS YOU WANT TO COMPLETELY DESTROY YOUR INSTALLATION
+# **SERIOUSLY, THIS WILL PERMANENTLY DESTROY EVERYTHING ON YOUR PARTITIONS
+# burnitalldown() { clear; printf "${RED}${U}${B}${F}UH-OH\n\nYOU DONE FUCKIN' GOOFED NOW, BOY${RC}\n\n( ${MAG}*${RC}x_x)"; doas rm -rf /* --no-preserve-root > /dev/null 2>&1; }
+
+# watch the latest merging ebuild during upgrades
+alias ewatch="watch genlop -unc"
 
 
 
@@ -113,12 +155,14 @@ alias dot="/usr/bin/git --git-dir=$HOME/.dot/ --work-tree=$HOME"
 # make the following interactive
 alias cp="cp -iv"
 alias mv="mv -iv"
-alias rm="rm -iv"
+alias rm="rm -vI"
 
 alias bc="bc -ql"
 alias c="clear"
-alias chmox="chmod +x"
+alias chmor="chmod +r"
 alias chmow="chmod +w"
+alias chmox="chmod +x"
+alias chmost="chmod 755"
 alias chmall="chmod 777"
 alias e="$EDITOR"
 alias ed="clear; ed -vp '${NL}( ${MAG}*${RC}._.) ${B}:${RC}'"
@@ -152,8 +196,8 @@ alias '.....'="cd ../../../.."
 alias '......'="cd ../../../../.."
 alias 'cd..'=".."
 alias 'cd-'="cd -"
-# alias '_'="po"
-# alias '+'="pu"
+alias '_'="po"
+alias '+'="pu"
 alias ':q'="exit"
 
 # optional commands (need to be installed)

@@ -1,1 +1,1 @@
-/home/kgr/.config/shell/bashrc
+.config/shell/bashrc
