@@ -2,6 +2,6 @@
 url="https://bing.com/search?q=$(urlencode "$*")"
 
 exec lynx "$url"
-# exec w3m "$url"
+# w3m "$url"
 # exec lynx "bing.com/search?q=$*"
-# exec w3m "bing.com/search?q=$*"
+# w3m "bing.com/search?q=$*"

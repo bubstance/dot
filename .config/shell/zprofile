@@ -1,12 +1,13 @@
 #!/bin/zsh
 
 # add `~/.local/bin` and `~/.local/scripts` to $PATH
-export PATH="$PATH:$HOME/.local/bin:$HOME/.local/scripts"
+export PATH="$HOME/.local/bin:$HOME/.local/scripts:$PATH"
 
 unsetopt PROMPT_SP
 
 export EDITOR="nvim"
-# export TERMINAL="st"
+export VISUAL="nvim"
+export TERMINAL="st"
 export BROWSER="librewolf-bin"
 
 # ~/ Clean-up:
@@ -14,6 +15,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"
+export XAUTHORITY="${XDG_RUNTIME_DIR}/Xauthority" # This line will break some DMs
 export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc"
 export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
 export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"

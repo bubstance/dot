@@ -97,6 +97,9 @@ set wildmode=list,longest,full
 " save files with elevated permissions without closing
     cnoremap w!! execute 'silent! write !doas tee % >/dev/null' <bar> edit!
     " cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
+" run xrdb whenever xresources or xdefaults are updated
+    autocmd BufRead,BufNewFile Xresources,Xdefaults,xresources,xdefaults set filetype=xdefaults
+    autocmd BufWritePost Xresources,Xdefaults,xresources,xdefaults !xrdb %
 
 
 
@@ -246,10 +249,8 @@ call plug#end()
     noremap <Leader>0 :tablast<CR>
 
 " insert mode navigation
-    inoremap <M-h> <Left>
-    inoremap <M-j> <Esc>A
-    inoremap <M-k> <Esc>I
-    inoremap <M-l> <Right>
+    inoremap <C-j> <Esc>A
+    inoremap <C-k> <Esc>I
 
 " window movements
     map <Leader>= <C-w>=

@@ -8,8 +8,9 @@ cfx	${XDG_CONFIG_HOME:-$HOME/.config}/x11/xresources	# Colors, themes and variab
 
 # These do not update automatically, but on the next new instance of a program:
 
-cfv	${XDG_CONFIG_HOME:-$HOME/.config}/nvim/init.vim		        # vim/neovim config
-cfa	${XDG_CONFIG_HOME:-$HOME/.config}/shell/bash_aliases        # aliases used by bash
+cfv     ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/init.vim		    # vim/neovim config
+cfab	${XDG_CONFIG_HOME:-$HOME/.config}/shell/baliasrc        # aliases used by bash
+cfaz	${XDG_CONFIG_HOME:-$HOME/.config}/shell/zaliasrc        # aliases used by zsh
 cfmb	${XDG_CONFIG_HOME:-$HOME/.config}/ncmpcpp/bindings	    # ncmpcpp (music player) keybinds file
 cfmc	${XDG_CONFIG_HOME:-$HOME/.config}/ncmpcpp/config	    # ncmpcpp (music player) config
 cfX	${XDG_CONFIG_HOME:-$HOME/.config}/nsxiv/exec/key-handler    # nsxiv (image viewer) key/script handler

@@ -2,6 +2,6 @@
 url="https://en.wikipedia.org/w/index.php?title=$(urlencode "$*")"
 
 exec lynx "$url"
-# exec w3m "$url"
+# w3m "$url"
 # exec lynx "en.wikipedia.org/w/index.php?title=$*"
-# exec w3m "en.wikipedia.org/w/index.php?title=$*"
+# w3m "en.wikipedia.org/w/index.php?title=$*"

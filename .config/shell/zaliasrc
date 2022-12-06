@@ -105,7 +105,7 @@ unmerge() { emerge -aC "$@"; emerge -ac; updatedb; }
 # burnitalldown() { clear; printf "${RED}${U}${B}${F}UH-OH\n\nYOU DONE FUCKIN' GOOFED NOW, BOY${RC}\n\n( ${MAG}*${RC}x_x)"; doas rm -rf /* --no-preserve-root > /dev/null 2>&1; }
 
 # watch the latest merging ebuild during upgrades
-alias ewatch="watch genlop -unc"
+alias ewatch="doas watch genlop -unc"
 
 
 
@@ -203,3 +203,6 @@ alias \
 # optional commands (need to be installed)
 # alias emacs="emacsclient -ac 'emacs'"
 # alias scim="sc-im"
+
+# have fun
+hey() { nf; la; echo; }

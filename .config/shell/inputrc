@@ -1,4 +1,5 @@
 $include /etc/inputrc
+set enable-keypad on
 set editing-mode vi
 $if mode=vi
 

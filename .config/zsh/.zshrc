@@ -58,6 +58,7 @@ lfcd () {
         dir="$(cat "$tmp")"
         [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
     fi
+    clear
 }
 
 bindkey -s '^o' '^ulfcd\n'
