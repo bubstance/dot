@@ -1,0 +1,66 @@
+#+TITLE: Literate Emacs Config
+#+AUTHOR: kgr
+
+* Minor tweaks and basic settings
+** Kill the annoyances (startup screen, bell, etc.)
+
+#+begin_src emacs-lisp
+  (setq inhibit-startup-screen t)
+  (setq initial-scratch-message nil)
+  (setq ring-bell-function 'ignore)
+#+end_src
+
+** Remove the bars and tabs I don't need
+
+#+begin_src emacs-lisp
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+#+end_src
+
+** Fix transparency issues when using dwm/st/picom combo
+
+#+begin_src emacs-lisp
+  (set-frame-parameter (selected-frame) 'alpha '(90))
+  (add-to-list 'default-frame-alist '(alpha . (90)))
+#+end_src
+
+** Enable recent files list and shortcut
+
+#+begin_src emacs-lisp
+  (recentf-mode 1)
+  (savehist-mode 1)
+  (save-place-mode 1)
+  (setq recentf-max-menu-items 25)
+  (setq recentf-max-saved-items 25)
+  (global-set-key "\C-x\ \C-r" 'recentf-open-files)
+#+end_src
+
+** Enable better relative line numbers
+
+#+begin_src emacs-lisp
+  (defvar my-linum-current-line-number 0)
+
+  (setq linum-format 'my-linum-relative-line-numbers)
+
+  (defun my-linum-relative-line-numbers (line-number)
+    (let ((test2 (- line-number my-linum-current-line-number)))
+      (propertize
+       (number-to-string (cond ((<= test2 0) (* -1 test2))
+			       ((> test2 0) test2)))
+       'face 'linum)))
+
+  (defadvice linum-update (around my-linum-update)
+    (let ((my-linum-current-line-number (line-number-at-pos)))
+      ad-do-it))
+  (ad-activate 'linum-update)
+
+  (global-linum-mode t)
+#+end_src
+
+** Allow automatic updates to reflect changes on disk
+
+#+begin_src emacs-lisp
+  (global-auto-revert-mode 1)
+  (setq global-auto-revert-non-file-buffers t)
+#+end_src
