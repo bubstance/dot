@@ -12,7 +12,7 @@ getmount() { \
 	test -z "$mp" && exit 1
 	if [ ! -d "$mp" ]; then
 		mkdiryn=$(printf "No\\nYes" | dmenu -i -p "$mp does not exist. Create it?") || exit 1
-		[ "$mkdiryn" = "Yes" ] && (mkdir -p "$mp" || sudo -A mkdir -p "$mp")
+		[ "$mkdiryn" = "Yes" ] && (mkdir -p "$mp" || doas mkdir -p "$mp")
 	fi
 	}
 
@@ -26,7 +26,7 @@ mountusb() { \
 	case "$partitiontype" in
 		"vfat") doas mount -t vfat "$chosen" "$mp" -o rw,umask=0000;;
 		"exfat") doas mount "$chosen" "$mp" -o uid="$(id -u)",gid="$(id -g)";;
-		*) doas mount "$chosen" "$mp"; user="$(whoami)"; ug="$(groups | awk '{print $1}')"; sudo -A chown "$user":"$ug" "$mp";;
+		*) doas mount "$chosen" "$mp"; user="$(whoami)"; ug="$(groups | awk '{print $1}')"; doas chown "$user":"$ug" "$mp";;
 	esac && notify-send "💻 USB mounting" "$chosen mounted to $mp." ||
 		notify-send "💻 Drive failed to mount." "Probably a permissions issue or drive is already mounted."
 	}

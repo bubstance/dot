@@ -3,10 +3,10 @@
 
 
 " --{ autoinstall command }--
-    if ! filereadable(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/plug.vim"'))
+    if ! filereadable(system('echo -n "$HOME/.vim/autoload/plug.vim"'))
         echo "Downloading vim-plug to manage plugins..."
-        silent !mkdir -p ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/
-        silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/plug.vim
+        silent !mkdir -p $HOME/.vim/autoload/
+        silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > $HOME/.vim/autoload/plug.vim
         autocmd VimEnter * PlugInstall
     endif
 
@@ -28,6 +28,7 @@ set ignorecase
 set incsearch
 set lcs=tab:\|\ ,lead:•,trail:~
 set mouse=a
+set nocompatible
 set noerrorbells
 set nohlsearch
 set nu relativenumber
@@ -104,7 +105,7 @@ set wildmode=list,longest,full
 
 
 " ---{ plugins }---
-call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"'))
+call plug#begin(system('echo -n "$HOME/.vim/plugged"'))
   " for function
     Plug 'airblade/vim-gitgutter'
     Plug 'gentoo/gentoo-syntax'

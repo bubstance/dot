@@ -25,7 +25,7 @@ RC=$'\e[0m'
 [ -f "$XINITRC" ] && alias startx="startx $XINITRC"
 
 # doas/sudo not required for some system commands
-for command in emerge eselect genlop mount poweroff rc-service rc-update reboot shutdown su umount updatedb; do
+for command in blkid emerge eselect genlop mount poweroff rc-service rc-update reboot shutdown su umount updatedb; do
     alias $command="doas $command"
     # alias $command="sudo $command"
 done; unset command
@@ -201,8 +201,10 @@ alias \
     ':q'="exit"
 
 # optional commands (need to be installed)
-# alias emacs="emacsclient -ac 'emacs'"
-# alias scim="sc-im"
+alias pmix="pulsemixer"
+# alias emacs="emacsclient --socket-name=/tmp/emacs$(id -u)/server file"
+alias emacs="emacsclient -ac 'emacs'"
+alias scim="sc-im"
 
 # have fun
 hey() { nf; la; echo; }
