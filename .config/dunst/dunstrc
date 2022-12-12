@@ -3,7 +3,7 @@
     monitor = 0
     follow = keyboard
     transparency = 15
-    font = Source Code Pro 10
+    font = "Font Awesome 5, Source Code Pro 10"
     format = "<b>%s</b>\n%b"
 
 [base16_low]

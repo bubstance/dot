@@ -270,10 +270,10 @@ case $BLOCK_BUTTON in
 	[ $(($(date '+%s') - $(stat -c %Y "$doppler"))) -gt "$secs" ] && getdoppler
 	showdoppler ;;
 	2) pickloc && getdoppler && showdoppler ;;
-	3) notify-send "Doppler radar module" "\- Left click for local Doppler radar
-- Middle click to update radar location
+	3) notify-send "Doppler radar module" "\- Left click for local radar
+- Middle click to update location
 After $secs seconds, new clicks will also automatically update the radar"  ;;
 	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 
-echo "[  ]"
+echo "[  ]"

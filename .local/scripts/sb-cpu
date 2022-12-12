@@ -1,7 +1,7 @@
 #!/bin/sh
 
 case $BLOCK_BUTTON in
-	3) notify-send "CPU temperature module " "Shows CPU temperature" ;;
+	3) notify-send "CPU temperature module " "Displays CPU temperature" ;;
 	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 
