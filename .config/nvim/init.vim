@@ -94,6 +94,8 @@ set wildmode=list,longest,full
     autocmd BufRead,BufNewFile *.ms,*.me,*.mom,*.man set filetype=groff
     autocmd BufRead,BufNewFile *.Rmd,*.rmd set filetype=rmd
     autocmd BufRead,BufNewFile *.tex set filetype=tex
+" recompile dwmblocks after updating its config.h
+    autocmd BufWritePost ~/.local/src/dwmblocks/config.h !cd ~/.local/src/dwmblocks/; doas make install && { killall -q dwmblocks;setsid dwmblocks & }
 " save files with elevated permissions without closing
     cnoremap w!! execute 'silent! write !doas tee % >/dev/null' <bar> edit!
     " cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
