@@ -178,6 +178,7 @@ alias \
     iv="sx" \
     t10="du -ah . | sort -hr | head -n 10" \
     'tmux-ks'="tmux kill-server" \
+    trem="transmission-remote" \
     v="vim" \
     YT="youtube-viewer" \
     yt="yt-dlp --embed-metadata -i" \
