@@ -1,0 +1,10 @@
+#!/bin/sh
+
+case $BLOCK_BUTTON in
+	3) notify-send "CPU temperature module " "Shows CPU temperature" ;;
+	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac
+
+temperature=$(sensors | awk '/Core 0/ {print $3}')
+
+printf "%s" "[ $temperature |"
