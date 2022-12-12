@@ -1,6 +1,10 @@
 #+TITLE: Literate Emacs Config
 #+AUTHOR: kgr
 
+* TODO Finish this document
+
+  - [ ] Find some plugins
+
 * Minor tweaks and basic settings
 ** Kill the annoyances (startup screen, bell, etc.)
 
@@ -36,26 +40,11 @@
   (global-set-key "\C-x\ \C-r" 'recentf-open-files)
 #+end_src
 
-** Enable better relative line numbers
+** Enable relative line numbers
 
 #+begin_src emacs-lisp
-  (defvar my-linum-current-line-number 0)
-
-  (setq linum-format 'my-linum-relative-line-numbers)
-
-  (defun my-linum-relative-line-numbers (line-number)
-    (let ((test2 (- line-number my-linum-current-line-number)))
-      (propertize
-       (number-to-string (cond ((<= test2 0) (* -1 test2))
-			       ((> test2 0) test2)))
-       'face 'linum)))
-
-  (defadvice linum-update (around my-linum-update)
-    (let ((my-linum-current-line-number (line-number-at-pos)))
-      ad-do-it))
-  (ad-activate 'linum-update)
-
-  (global-linum-mode t)
+  (global-display-line-numbers-mode 1)
+  (setq display-line-numbers-type 'relative)
 #+end_src
 
 ** Allow automatic updates to reflect changes on disk
@@ -65,6 +54,8 @@
   (setq global-auto-revert-non-file-buffers t)
 #+end_src
 
+
+
 * Main Setup
 ** Packages
 
@@ -72,42 +63,60 @@
 ;; install straight.el and configure some base packages
 (defvar bootstrap-version)
 (let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 6))
-  (unless (file-exists-p bootstrap-file)
+	(expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+    (bootstrap-version 6))
+(unless (file-exists-p bootstrap-file)
     (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+	(url-retrieve-synchronously
+	"https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+	'silent 'inhibit-cookies)
+    (goto-char (point-max))
+    (eval-print-last-sexp)))
+(load bootstrap-file nil 'nomessage))
 
 (straight-use-package 'use-package)
 
 (use-package el-patch
-  :straight t)
+ :straight t)
 
 (use-package evil
-  :hook
-    (after-init . evil-mode)
-  :init
-  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
-  (setq evil-want-keybinding nil)
-  (setq evil-vsplit-window-right t)
-  (setq evil-split-window-below t)
-  :config
-  (evil-mode 1))
+ :hook
+ (after-init . evil-mode)
+ :init
+ (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+ (setq evil-want-keybinding nil)
+ (setq evil-vsplit-window-right t)
+ (setq evil-split-window-below t)
+ :config
+ (evil-mode 1))
 
 (use-package evil-collection
-  :after evil
-  :straight t
-  :config
-  :custom (evil-collection-setup-minibuffer t)
-  (evil-collection-init))
+ :after evil
+ :straight t
+ :config
+ :custom (evil-collection-setup-minibuffer t)
+ (evil-collection-init))
 
 (use-package which-key
-  :straight t
-  :config
-  (which-key-mode))
+ :straight t
+ :config
+ (which-key-mode))
+
+(use-package autothemer
+    :straight t)
+
+(straight-use-package
+ '(rose-pine-emacs
+  :host github
+  :repo "thongpv87/rose-pine-emacs"
+  :branch "master"))
+(load-theme 'rose-pine-color t)
+
+#+end_src
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-=") 'text-scale-increase)
+  (global-set-key (kbd "C--") 'text-scale-decrease)
+  (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
+  (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
 #+end_src
