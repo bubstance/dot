@@ -4,8 +4,8 @@ transmission-remote -l | grep % |
 	sed " # The letters are for sorting and will not appear.
 	s/.*Stopped.*/A 🛑/;
 	s/.*Seeding.*/Z /;
-	s/.*100%.*/N /;
-	s/.*Idle.*/B /;
+	s/.*100%.*/N /;
+	s/.*Idle.*/B /;
 	s/.*Uploading.*/L /;
 	s/.*%.*/M /" |
 		sort -h | uniq -c | awk '{print "[ " $3 $1 " ]"}' | paste -sd ' ' -
@@ -17,10 +17,10 @@ case $BLOCK_BUTTON in
 - Left click to open tremc
 - Middle click to toggle transmission daemon
 🛑 paused
- idle (seeds needed)
+ idle (seeds needed)
  uploading (unfinished)
  downloading
- done
+ done
  done and seeding" ;;
 	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac

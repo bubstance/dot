@@ -5,6 +5,7 @@
     transparency = 15
     font = "Font Awesome 5, Source Code Pro 10"
     format = "<b>%s</b>\n%b"
+    alignment = center
 
 [base16_low]
     msg_urgency = low

@@ -1,13 +1,13 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const char font[]        = "DejaVu Sans Mono:size=10";
-static const char* normbgcolor  = "#073642";
-static const char* normfgcolor  = "#839496";
-static const char* selbgcolor   = "#586e75";
-static const char* selfgcolor   = "#002b36";
-static const char* urgbgcolor   = "#dc322f";
-static const char* urgfgcolor   = "#fdf6e3";
+static const char font[]        = "Source Code Pro:size=10";
+static const char* normbgcolor  = "#26233a";
+static const char* normfgcolor  = "#e0def4";
+static const char* selbgcolor   = "#6e6a86";
+static const char* selfgcolor   = "#26233a";
+static const char* urgbgcolor   = "#eb6f92";
+static const char* urgfgcolor   = "#e0def4";
 static const char before[]      = "<";
 static const char after[]       = ">";
 static const char titletrim[]   = "...";
