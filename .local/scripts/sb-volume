@@ -7,9 +7,9 @@ case $BLOCK_BUTTON in
 	2) setsid -f "$TERMINAL" -e pulsemixer ;;
 	4) pulsemixer --change-volume +5 ;;
 	5) pulsemixer --change-volume -5 ;;
-    3) notify-send "Volume module" "\- Left click to mute
-- Middle click to open pulsemixer
-- Scroll to change volume" ;;
+    3) notify-send "Volume module" "\- Scroll to change volume
+- Left click to mute
+- Middle click to open pulsemixer" ;;
 	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac
 

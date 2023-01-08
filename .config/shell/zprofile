@@ -1,7 +1,10 @@
 #!/bin/zsh
 
-# add `~/.local/bin` and `~/.local/scripts` to $PATH
-export PATH="$HOME/.local/bin:$HOME/.local/scripts:$PATH"
+# add plan9 binaries
+export PLAN9="/usr/local/plan9port"
+
+# add additional directories to $PATH
+export PATH="$HOME/.local/bin:$HOME/.local/scripts:$PATH:$PLAN9/bin"
 
 unsetopt PROMPT_SP
 
@@ -15,7 +18,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"
-export XAUTHORITY="${XDG_RUNTIME_DIR}/Xauthority" # This line will break some DMs
+# export XAUTHORITY="${XDG_RUNTIME_DIR}/Xauthority" # This line will break some DMs
 export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
 export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
 export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc"

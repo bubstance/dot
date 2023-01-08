@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Torrent peertube videos. Requires the transadd script
+# First argument is the video link, second is the quality (360p, 480p, or 1080p)
+
+instance=$(echo "$1" | sed "s|/w.\+||")
+vidid=$(echo "$1" | sed "s|.\+/||")
+link=$(curl -s "$instance/api/v1/videos/$vidid" | grep -o "$instance/download/torrents/.\{37\}$2.torrent")
+transadd "$link"

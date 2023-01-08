@@ -18,26 +18,32 @@ let mapleader=" "
 nnoremap c "_c
 syntax on
 
+set backspace=indent,eol,start
 " set cc=60,80,100
+set cindent
 set clipboard^=unnamed,unnamedplus
 set cursorline
 set encoding=utf-8
-set expandtab
+" set expandtab
 set go=a
 set ignorecase
 set incsearch
-set lcs=tab:\|\ ,lead:•,trail:~
+set lcs=tab:>-,lead:•,trail:~
 set mouse=a
+set nobackup
 set noerrorbells
 set nohlsearch
-set nu relativenumber
+set nu rnu
 set path+=**
+set ruler
 set scrolloff=4
 set shiftwidth=4
 set showtabline=2
 set sidescrolloff=4
 set signcolumn=yes
 set smartcase
+set smartindent
+set spelllang=en_us
 set splitbelow splitright
 set tabstop=4
 set title
@@ -114,16 +120,16 @@ call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
     Plug 'junegunn/goyo.vim'
-    Plug 'junegunn/limelight.vim'
+    " Plug 'junegunn/limelight.vim'
     Plug 'kshenoy/vim-signature'
-    Plug 'preservim/nerdtree'
+    " Plug 'preservim/nerdtree'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-sensible'
     Plug 'tpope/vim-speeddating'
     Plug 'tpope/vim-surround'
     Plug 'tpope/vim-unimpaired'
-    " Plug 'tpope/vim-vinegar'
+    Plug 'tpope/vim-vinegar'
     Plug 'wesQ3/vim-windowswap'
     Plug 'vim-pandoc/vim-pandoc-syntax'
     Plug 'vim-scripts/restore_view.vim'
@@ -169,20 +175,20 @@ call plug#end()
     map <Leader>F :AllFiles<CR>
 
 " NERDTree customization
-    nnoremap <expr> <Leader>n g:NERDTree.IsOpen() ? ':NERDTreeClose<CR>' : @% == '' ? ':NERDTree<CR>' : ':NERDTreeFind<CR>'
-    nmap <Leader>N :NERDTreeFind<CR>
-    autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-    if has('nvim')
-        let NERDTreeBookmarksFile = stdpath('data') . '/NERDTreeBookmarks'
-    else
-        let NERDTreeBookmarksFile = '$HOME/.config/nvim' . '/NERDTreeBookmarks'
-    endif
-    autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
-        \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
-    let NERDTreeMinimalUI=1
-    let NERDTreeShowHidden=1
-    let g:NERDTreeDirArrowExpandable = '+'
-    let g:NERDTreeDirArrowCollapsable = '~'
+    " nnoremap <expr> <Leader>n g:NERDTree.IsOpen() ? ':NERDTreeClose<CR>' : @% == '' ? ':NERDTree<CR>' : ':NERDTreeFind<CR>'
+    " nmap <Leader>N :NERDTreeFind<CR>
+    " autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+    " if has('nvim')
+    "     let NERDTreeBookmarksFile = stdpath('data') . '/NERDTreeBookmarks'
+    " else
+    "     let NERDTreeBookmarksFile = '$HOME/.config/nvim' . '/NERDTreeBookmarks'
+    " endif
+    " autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+    "     \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+    " let NERDTreeMinimalUI=1
+    " let NERDTreeShowHidden=1
+    " let g:NERDTreeDirArrowExpandable = '+'
+    " let g:NERDTreeDirArrowCollapsable = '~'
 
 " vim-session settings
     let g:session_autosave='no'
@@ -211,10 +217,11 @@ call plug#end()
         return strlen(l:branchname) > 0?' '.l:branchname.' ':''
     endfunction
 
+" ---{ custom status line }---
     set laststatus=2
     set statusline=
     set statusline+=%#LineNr#
-    set statusline+=\ %f
+    " set statusline+=\ %f
     set statusline+=%m
     set statusline+=\ %r
     set statusline+=%=
@@ -256,6 +263,14 @@ call plug#end()
 " insert mode navigation
     inoremap <C-j> <Esc>A
     inoremap <C-k> <Esc>I
+
+" move entire chunks in visual mode
+    vnoremap J :m '>+1<CR>gv=gv
+    vnoremap K :m '<-2<CR>gv=gv
+
+" random shit
+    nnoremap <C-d> <C-d>zz
+    nnoremap <C-u> <C-u>zz
 
 " window movements
     map <Leader>= <C-w>=

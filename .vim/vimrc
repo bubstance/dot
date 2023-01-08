@@ -215,7 +215,7 @@ call plug#end()
     set laststatus=2
     set statusline=
     set statusline+=%#LineNr#
-    set statusline+=\ %f
+    " set statusline+=\ %f
     set statusline+=%m
     set statusline+=\ %r
     set statusline+=%=

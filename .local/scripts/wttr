@@ -2,7 +2,7 @@
 
 # displays precipication chance and today's high/low temps
 # set a cronjob to pull weather report from wttr.in
-# example: 0 1,9,17 * * * /usr/bin/curl -sf "wttr.in/<location>" > /home/<user>/.cache/weatherreport
+# example: 0 1,9,17 * * * /usr/bin/curl -sf "wttr.in/<location>" > /home/<user>/.cache/weather
 # will pull the weather 3 times per day: at 0100, 0900, and 1700
 
 report="${XDG_CACHE_HOME:-$HOME/.cache}/weather"
